@@ -1,1 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
 
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vector<long long> c(n);
+    for (auto &x : c) cin >> x;
+
+    sort(c.begin(), c.end());
+
+    bool good = true;
+    for (int i = 1; i < n; i++) {
+        if (c[i] != c[i-1] + 1) { good = false; break; }
+    }
+
+    cout << (good ? "Deck looks good" : "Scammed") << "\n";
+    return 0;
+}
