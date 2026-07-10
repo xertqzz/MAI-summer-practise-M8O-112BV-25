@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+long long countInversions(vector<int>& a, vector<int>& temp, int left, int right) {
+    if (left >= right) return 0;
+    int mid = (left + right) / 2;
+    long long inv = countInversions(a, temp, left, mid) + countInversions(a, temp, mid + 1, right);
+
+    int i = left, j = mid + 1, k = left;
+    while (i <= mid && j <= right) {
+        if (a[i] <= a[j]) {
+            temp[k++] = a[i++];
+        } else {
+            temp[k++] = a[j++];
+            inv += (mid - i + 1);
+        }
+    }
+    while (i <= mid) temp[k++] = a[i++];
+    while (j <= right) temp[k++] = a[j++];
+    for (int x = left; x <= right; x++) a[x] = temp[x];
+
+    return inv;
+}
+
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        for (auto &x : a) cin >> x;
+        vector<int> temp(n);
+        cout << countInversions(a, temp, 0, n - 1) << "\n";
+    }
+    return 0;
+}
