@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    long long omega;
+    cin >> n >> omega;
+
+    vector<pair<long long,int>> w(n);
+    for (int i = 0; i < n; i++) {
+        long long x;
+        cin >> x;
+        w[i] = {x, i + 1};
+    }
+
+    sort(w.begin(), w.end());
+
+    long long mass = omega;
+    vector<int> order;
+    order.reserve(n);
+
+    bool ok = true;
+    for (int i = 0; i < n; i++) {
+        if (mass > w[i].first) {
+            mass += w[i].first;
+            order.push_back(w[i].second);
+        } else {
+            ok = false;
+            break;
+        }
+    }
+
+    if (!ok) {
+        cout << "NO\n";
+    } else {
+        cout << "YES\n";
+        for (int i = 0; i < n; i++) {
+            cout << order[i] << (i + 1 < n ? ' ' : '\n');
+        }
+    }
+
+    return 0;
+}
