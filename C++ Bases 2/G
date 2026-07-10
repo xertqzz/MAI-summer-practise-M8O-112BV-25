@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    priority_queue<long long> maxHeap;
+    priority_queue<long long, vector<long long>, greater<long long>> minHeap;
+
+    string out;
+    out.reserve(n * 12);
+
+    for (int k = 0; k < n; k++) {
+        long long x;
+        cin >> x;
+
+        if (maxHeap.empty() || x <= maxHeap.top()) {
+            maxHeap.push(x);
+        } else {
+            minHeap.push(x);
+        }
+
+        if (maxHeap.size() > minHeap.size() + 1) {
+            minHeap.push(maxHeap.top());
+            maxHeap.pop();
+        } else if (minHeap.size() > maxHeap.size()) {
+            maxHeap.push(minHeap.top());
+            minHeap.pop();
+        }
+
+        out += to_string(maxHeap.top());
+        out += '\n';
+    }
+
+    cout << out;
+    return 0;
+}
