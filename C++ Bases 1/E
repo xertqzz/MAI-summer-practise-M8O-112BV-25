@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    vector<long long> a(n);
+    for (auto &x : a) cin >> x;
+
+    vector<int> localMin, localMax;
+
+    for (int i = 0; i < n; i++) {
+        bool leftOk = true, rightOk = true; // условие выполняется, если соседа нет
+        bool leftOkMax = true, rightOkMax = true;
+
+        bool isMin = true, isMax = true;
+
+        if (i > 0) {
+            if (!(a[i - 1] > a[i])) isMin = false;
+            if (!(a[i - 1] < a[i])) isMax = false;
+        }
+        if (i < n - 1) {
+            if (!(a[i] < a[i + 1])) isMin = false;
+            if (!(a[i] > a[i + 1])) isMax = false;
+        }
+
+        if (isMin) localMin.push_back(i + 1);
+        if (isMax) localMax.push_back(i + 1);
+    }
+
+    int globalMinIdx = 0, globalMaxIdx = 0;
+    for (int i = 1; i < n; i++) {
+        if (a[i] < a[globalMinIdx]) globalMinIdx = i;
+        if (a[i] > a[globalMaxIdx]) globalMaxIdx = i;
+    }
+
+    cout << localMin.size();
+    for (int p : localMin) cout << " " << p;
+    cout << "\n";
+
+    cout << localMax.size();
+    for (int p : localMax) cout << " " << p;
+    cout << "\n";
+
+    cout << (globalMinIdx + 1) << " " << (globalMaxIdx + 1) << "\n";
+
+    return 0;
+}
