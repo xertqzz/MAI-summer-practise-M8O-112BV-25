@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const long long MOD = 1e9 + 7;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, k, m;
+    cin >> n >> k >> m;
+
+    vector<bool> dangerous(n + 1, false);
+    for (int i = 0; i < m; i++) {
+        int a;
+        cin >> a;
+        dangerous[a] = true;
+    }
+
+    vector<long long> dp(n + 1, 0);
+    vector<long long> prefSum(n + 1, 0);
+
+    dp[0] = 1;
+    prefSum[0] = dp[0];
+
+    for (int i = 1; i <= n; i++) {
+        int lo = max(0, i - k);
+        long long sum;
+        if (lo == 0) {
+            sum = prefSum[i - 1];
+        } else {
+            sum = (prefSum[i - 1] - prefSum[lo - 1] + MOD) % MOD;
+        }
+
+        if (dangerous[i]) {
+            dp[i] = 0;
+        } else {
+            dp[i] = sum;
+        }
+
+        prefSum[i] = (prefSum[i - 1] + dp[i]) % MOD;
+    }
+
+    cout << dp[n] << '\n';
+
+    return 0;
+}
