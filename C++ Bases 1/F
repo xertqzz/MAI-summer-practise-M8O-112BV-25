@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef __int128 lll;
+
+lll parseNum(const string& s) {
+    int dot = s.find('.');
+    string ip = s.substr(0, dot);
+    string fp = s.substr(dot + 1);
+    while ((int)fp.size() < 15) fp.push_back('0');
+
+    lll intPart = 0;
+    for (char c : ip) if (isdigit((unsigned char)c)) intPart = intPart * 10 + (c - '0');
+    lll fracPart = 0;
+    for (char c : fp) if (isdigit((unsigned char)c)) fracPart = fracPart * 10 + (c - '0');
+
+    lll scale = 1;
+    for (int i = 0; i < 15; i++) scale *= 10;
+    return intPart * scale + fracPart;
+}
+
+string toStr(lll x) {
+    if (x == 0) return "0";
+    bool neg = x < 0;
+    if (neg) x = -x;
+    string s;
+    while (x > 0) { s.push_back('0' + (int)(x % 10)); x /= 10; }
+    if (neg) s.push_back('-');
+    reverse(s.begin(), s.end());
+    return s;
+}
+
+int main() {
+    lll sum = 0;
+    string line;
+    while (getline(cin, line)) {
+        while (!line.empty() && (line.back()=='\r' || line.back()=='\n' || line.back()==' ')) line.pop_back();
+        size_t start = 0;
+        while (start < line.size() && line[start] == ' ') start++;
+        line = line.substr(start);
+        if (line.empty()) continue;
+        sum += parseNum(line);
+    }
+
+    lll scale = 1;
+    for (int i = 0; i < 15; i++) scale *= 10;
+    lll intPart = sum / scale;
+    lll fracPart = sum % scale;
+
+    string fracStr = toStr(fracPart);
+    while ((int)fracStr.size() < 15) fracStr = "0" + fracStr;
+
+    cout << toStr(intPart) << "." << fracStr << "\n";
+    return 0;
+}
