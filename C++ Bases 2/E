@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+    vector<long long> d(n);
+    for (auto &x : d) cin >> x;
+    sort(d.begin(), d.end());
+
+    int q;
+    cin >> q;
+
+    string out;
+    out.reserve(q * 8);
+
+    while (q--) {
+        long long s, f;
+        cin >> s >> f;
+        long long lo = min(s, f), hi = max(s, f);
+        long long cnt = upper_bound(d.begin(), d.end(), hi) - lower_bound(d.begin(), d.end(), lo);
+        out += to_string(cnt);
+        out += '\n';
+    }
+
+    cout << out;
+    return 0;
+}
