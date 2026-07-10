@@ -1,0 +1,26 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    unsigned long long n;
+    int k;
+    cin >> n >> k;
+
+    unsigned long long p = 1ULL << k;   
+    unsigned long long q = n / p;       
+
+    if (q == 0) {
+        cout << -1 << "\n";
+        return 0;
+    }
+
+    unsigned long long m;
+    if (q % 2 == 1) {
+        m = q * p;          
+    } else {
+        m = (q - 1) * p;    
+    }
+
+    cout << m << "\n";
+    return 0;
+}
