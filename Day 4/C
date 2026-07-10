@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    vector<long long> price(n + 2);
+    price[1] = 0;
+    for (int i = 1; i <= n; i++) {
+        long long a;
+        cin >> a;
+        price[i + 1] = price[i] + a;
+    }
+
+    long long minValue = price[1];
+    int minIndex = 1;
+
+    long long bestProfit = 0;
+    int bestBuy = -1, bestSell = -1;
+
+    for (int j = 2; j <= n + 1; j++) {
+        long long profit = price[j] - minValue;
+        if (profit > bestProfit) {
+            bestProfit = profit;
+            bestBuy = minIndex;
+            bestSell = j;
+        }
+        if (price[j] < minValue) {
+            minValue = price[j];
+            minIndex = j;
+        }
+    }
+
+    if (bestProfit > 0) {
+        cout << bestBuy << " " << bestSell << '\n';
+    } else {
+        cout << -1 << " " << -1 << '\n';
+    }
+
+    return 0;
+}
