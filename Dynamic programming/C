@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+const long long MOD = 1e9 + 7;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int l, r;
+    cin >> l >> r;
+
+    int N = r;
+    vector<long long> H(N + 1, 0);
+    H[1] = 1;
+
+    for (int d = 1; d <= N; d++) {
+        if (d != 1) {
+            H[d] %= MOD;
+        }
+        for (long long m = 2LL * d; m <= N; m += d) {
+            H[m] = (H[m] + H[d]) % MOD;
+        }
+    }
+
+    long long ans = 0;
+    for (int n = l; n <= r; n++) {
+        ans = (ans + H[n]) % MOD;
+    }
+
+    cout << ans << '\n';
+
+    return 0;
+}
