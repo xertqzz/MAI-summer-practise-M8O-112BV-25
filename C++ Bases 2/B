@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin >> n;
+
+    priority_queue<long long, vector<long long>, greater<long long>> pq;
+    for (int i = 0; i < n; i++) {
+        long long a;
+        cin >> a;
+        pq.push(a);
+    }
+
+    string out;
+    out.reserve(20 * n);
+
+    for (int i = 0; i < n - 1; i++) {
+        long long x = pq.top(); pq.pop();
+        long long y = pq.top(); pq.pop();
+        out += to_string(x);
+        out += ' ';
+        out += to_string(y);
+        out += '\n';
+        pq.push(x + y);
+    }
+
+    cout << out;
+    return 0;
+}
