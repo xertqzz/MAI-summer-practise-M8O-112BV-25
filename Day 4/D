@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    cin >> T;
+
+    while (T--) {
+        int n;
+        cin >> n;
+
+        vector<long long> a(n);
+        for (int i = 0; i < n; i++) cin >> a[i];
+
+        unordered_map<long long, int> lastSeen;
+        lastSeen.reserve(n * 2);
+
+        int left = 0;
+        int best = 0;
+
+        for (int right = 0; right < n; right++) {
+            auto it = lastSeen.find(a[right]);
+            if (it != lastSeen.end() && it->second >= left) {
+                left = it->second + 1;
+            }
+            lastSeen[a[right]] = right;
+            best = max(best, right - left + 1);
+        }
+
+        cout << best << '\n';
+    }
+
+    return 0;
+}
