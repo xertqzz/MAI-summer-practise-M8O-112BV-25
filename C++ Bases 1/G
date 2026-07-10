@@ -1,0 +1,27 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    long long n, k;
+    cin >> n >> k;
+
+    long long used = 0;
+    long long answer = 0;
+    long long d = 1;
+
+    while (used < k) {
+        long long N = 4LL * (n + d - 1);
+        if (used + N <= k) {
+            used += N;
+            answer += d * N;
+        } else {
+            long long remainder = k - used;
+            answer += remainder * d;
+            used = k;
+        }
+        d++;
+    }
+
+    cout << answer << "\n";
+    return 0;
+}
